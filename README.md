@@ -6,6 +6,7 @@
 
 `bash install.sh`
 
+`wget -O - https://raw.githubusercontent.com/AlexZubov/PIUS/master/install.sh > /tmp/install.sh && bash /tmp/install.sh`
 ##### На данный момент реализовано:
 
 - Обновление системных пакетов
