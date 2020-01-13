@@ -159,13 +159,8 @@ show "Установка утилиты wget"
 show "Установка утилиты git"
 	apt install -y git
 
-
 show "Установка утилиты net-tools"
   	apt install -y net-tools
-
-show "Установка pip3"
-apt install -y python3-pip
-
 
 show "Создание пользователя ${username}"
 	groupadd ${username} && \
@@ -186,60 +181,36 @@ show "Очистка пакетного менеджера"
   apt autoremove -y && \
   apt autoclean -y
 
-
 # Добавление ключа для авторизации
 echo -en "\n${green}Добавить публичный ключ для авторизации по ssh? [Y/n]: ${end}"
-answer
-if [[ $? -eq 0 ]]; then
-  echo -en "\n${cyan}Введите Ваш публичный ключ: ${end}"; read user_pub_key
-  mkdir /home/${username}/.ssh
-  {
-      echo "${user_pub_key}"
-    } > /home/${username}/.ssh/authorized_keys && \
-    chown ${username}:${username} /home/${username}/.ssh/authorized_keys
-fi
+  answer
+  if [[ $? -eq 0 ]]; then
+    echo -en "\n${cyan}Введите Ваш публичный ключ: ${end}"; read user_pub_key
+    mkdir /home/${username}/.ssh
+    {
+        echo "${user_pub_key}"
+      } > /home/${username}/.ssh/authorized_keys && \
+      chown ${username}:${username} /home/${username}/.ssh/authorized_keys
+  fi
 
 
 echo -en "\n${green}Установить python3 и всего зависимости? [Y/n]: ${end}"
-answer
-if [[ $? -ne 0 ]]; then
-show "Установка python + dev + venv"
-sudo apt-get -y update
-sudo apt-get -y install python3 python3-venv python3-dev
-fi
+  answer
+  if [[ $? -ne 0 ]]; then
+  show "Установка python + dev + venv"
+  sudo apt-get -y update
+  sudo apt-get -y install python3 python3-venv python3-dev python3-pip
+  fi
 
 echo -en "\n${green}Установить python3 и всего зависимости? [Y/n]: ${end}"
-answer
-if [[ $? -ne 0 ]]; then
-show "Установка mysql server, mail agent - postfix, supervisor, nginx"
-sudo apt-get -y install mysql-server supervisor nginx
-fi
-
-#echo -en "\n${cyan}Введите название приложения (en): ${end}"; read app_name
-#mkdir /home/${username}/${app_name}
-#cd /home/${username}/${app_name}
-#mkdir /home/${username}/${app_name}/app
-#{
-#    echo "from flask import Flask"
-#    echo "app = Flask(__name__)"
-#    echo "from app import routes"
-#  } > /home/${username}/${app_name}/__init__.py && \
-#  chown ${username}:${username} /home/${username}/${app_name}/__init__.py
-#{
-#    echo "from app import app"
-#    echo "@app.route('/')"
-#    echo "@app.route('/index')"
-#    echo "def index():"
-#    echo "  return 'Hello, World!'"
-#  } > /home/${username}/${app_name}/app/routes.py && \
-#  chown ${username}:${username} /home/${username}/${app_name}/app/routes.py
-#show "Активация виртуальной среды и установка Flask"
-#python3 -m venv venv
-#source venv/bin/activate
-#pip3 install flask
+  answer
+  if [[ $? -ne 0 ]]; then
+  show "Установка mysql server, mail agent - postfix, supervisor, nginx"
+  sudo apt-get -y update
+  sudo apt-get -y install mysql-server supervisor nginx
+  fi
 
 # === Вывод данных === #
-
 ip=$(wget -qO- ifconfig.co)
 echo -e "${clr}${clr}${clr}${clr}${clr}${clr}${end}\n"
 echo -e "${green}  Пользователь: ${cyan}${username}${end}"
