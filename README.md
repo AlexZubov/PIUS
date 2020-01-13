@@ -25,3 +25,10 @@
     - `getip='wget -qO- ifconfig.co'`
     - `ports='netstat -tulanp'`
     - `ll='ls -la'`
+- Возможность дополнительно установить:
+    - `python3`
+    - `python3-venv`
+    - `python3-dev`
+    - `python3-pip`
+    - `mysql-server`
+    - `nginx`

@@ -198,16 +198,16 @@ echo -en "\n${green}Установить python3 и всего зависимо�
   answer
   if [[ $? -eq 0 ]]; then
   show "Установка python + dev + venv"
-  sudo apt-get -y update
-  sudo apt-get -y install python3 python3-venv python3-dev python3-pip
+  apt-get -y update
+  apt-get -y install python3 python3-venv python3-dev python3-pip
   fi
 
 echo -en "\n${green}Установить mysql server, supervisor и nginx ? [Y/n]: ${end}"
   answer
   if [[ $? -eq 0 ]]; then
   show "Установка mysql server, supervisor, nginx"
-  sudo apt-get -y update
-  sudo apt-get -y install mysql-server supervisor nginx
+  apt-get -y update
+  apt-get -y install mysql-server supervisor nginx
   fi
 
 # === Вывод данных === #
@@ -220,6 +220,6 @@ echo -e "${green}      Порт SQL: ${cyan}${port_sql}${end}"
 echo -e "${green}    Внешний IP: ${cyan}${ip}${end}"
 echo -e "\n${cyan}  ssh ${username}@${ip} -p ${port_ssh}${end}"
 echo -e "${cyan}  sh://${username}@${ip}:${port_ssh}/${end}"
-echo -e "\n${clr}${clr}${clr}${clr}${clr}${clr}${end}"
+echo -e "\n${clr}${clr}${clr}${clr}${end}"
 
 rebootOS
