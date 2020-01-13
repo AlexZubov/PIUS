@@ -30,7 +30,7 @@ hdd=`df -m | awk '(NR == 2)' | awk '{print $2}'`
 
 function show() {
   # Печать информации о выполнении новой команды
-  echo -e "${brown}[RUN] ${1}...${end}"
+  echo -e "${brown} ${1}...${end}"
 }
 
 function answer() {
@@ -51,7 +51,7 @@ function close() {
 }
 
 function rebootOS() {
-  echo -e "\n${red}[ВНИМАНИЕ] Система будет перезагружена!${end}"
+  echo -e "\n${red}ВНИМАНИЕ! Система будет перезагружена!${end}"
   echo -e "${red}Сохраните данные указанные выше!${end}\n"
   close "reboot"
 }
@@ -186,32 +186,19 @@ show "Очистка пакетного менеджера"
   apt autoremove -y && \
   apt autoclean -y
 
-# === ЗАВЕРШЕНИЕ РАБОТЫ СКРИПТА === #
-
-ip=$(wget -qO- ifconfig.co)
-echo -e "${clr}${clr}${clr}${clr}${clr}${clr}${end}\n"
-echo -e "${green}  Пользователь: ${cyan}${username}${end}"
-echo -e "${green}        Пароль: ${cyan}${password}${end}"
-echo -e "${green}      Порт SSH: ${cyan}${port_ssh}${end}"
-echo -e "${green}      Порт SQL: ${cyan}${port_sql}${end}"
-echo -e "${green}    Внешний IP: ${cyan}${ip}${end}"
-echo -e "\n${cyan}  ssh ${username}@${ip} -p ${port_ssh}${end}"
-echo -e "${cyan}  sh://${username}@${ip}:${port_ssh}/${end}"
-echo -e "\n${clr}${clr}${clr}${clr}${clr}${clr}${end}"
-
 # Добавление ключа для авторизации
 echo -en "\n${green}Добавить публичный ключ для авторизации по ssh? [Y/n]: ${end}"
-answer; if [[ $? -ne 0 ]]; then rebootOS; fi
+answer; if [[ $? -ne 0 ]]; then echo ""; fi
 echo -en "\n${cyan}Введите Ваш публичный ключ: ${end}"; read user_pub_key
 mkdir /home/${username}/.ssh
 {
     echo "${user_pub_key}"
-  } >> /home/${username}/.ssh/authorized_keys
+  } > /home/${username}/.ssh/authorized_keys && \
   chown ${username}:${username} /home/${username}/.ssh/authorized_keys
 
 # Запрос на установку приложения flask
 echo -en "\n${green}Установить приложение Flask? [Y/n]: ${end}"
-answer; if [[ $? -ne 0 ]]; then rebootOS; fi
+answer; if [[ $? -ne 0 ]]; then echo ""; fi
 
 show "Установка python + dev + venv"
 sudo apt-get -y update
@@ -227,7 +214,7 @@ mkdir /home/${username}/${app_name}/app
     echo "from flask import Flask"
     echo "app = Flask(__name__)"
     echo "from app import routes"
-  } >> /home/${username}/${app_name}/__init__.py
+  } > /home/${username}/${app_name}/__init__.py && \
   chown ${username}:${username} /home/${username}/${app_name}/__init__.py
 {
     echo "from app import app"
@@ -235,12 +222,24 @@ mkdir /home/${username}/${app_name}/app
     echo "@app.route('/index')"
     echo "def index():"
     echo "  return 'Hello, World!'"
-  } >> /home/${username}/${app_name}/app/routes.py
+  } > /home/${username}/${app_name}/app/routes.py && \
   chown ${username}:${username} /home/${username}/${app_name}/app/routes.py
 show "Активация виртуальной среды и установка Flask"
 python3 -m venv venv
 source venv/bin/activate
 pip3 install flask
 
-#show "Переключаемся на ${username}"
-#	su ${username}
+# === Вывод данных === #
+
+ip=$(wget -qO- ifconfig.co)
+echo -e "${clr}${clr}${clr}${clr}${clr}${clr}${end}\n"
+echo -e "${green}  Пользователь: ${cyan}${username}${end}"
+echo -e "${green}        Пароль: ${cyan}${password}${end}"
+echo -e "${green}      Порт SSH: ${cyan}${port_ssh}${end}"
+echo -e "${green}      Порт SQL: ${cyan}${port_sql}${end}"
+echo -e "${green}    Внешний IP: ${cyan}${ip}${end}"
+echo -e "\n${cyan}  ssh ${username}@${ip} -p ${port_ssh}${end}"
+echo -e "${cyan}  sh://${username}@${ip}:${port_ssh}/${end}"
+echo -e "\n${clr}${clr}${clr}${clr}${clr}${clr}${end}"
+
+rebootOS
