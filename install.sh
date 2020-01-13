@@ -196,16 +196,16 @@ echo -en "\n${green}Добавить публичный ключ для авто
 
 echo -en "\n${green}Установить python3 и всего зависимости? [Y/n]: ${end}"
   answer
-  if [[ $? -ne 0 ]]; then
+  if [[ $? -eq 0 ]]; then
   show "Установка python + dev + venv"
   sudo apt-get -y update
   sudo apt-get -y install python3 python3-venv python3-dev python3-pip
   fi
 
-echo -en "\n${green}Установить python3 и всего зависимости? [Y/n]: ${end}"
+echo -en "\n${green}Установить mysql server, supervisor и nginx ? [Y/n]: ${end}"
   answer
-  if [[ $? -ne 0 ]]; then
-  show "Установка mysql server, mail agent - postfix, supervisor, nginx"
+  if [[ $? -eq 0 ]]; then
+  show "Установка mysql server, supervisor, nginx"
   sudo apt-get -y update
   sudo apt-get -y install mysql-server supervisor nginx
   fi
