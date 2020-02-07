@@ -177,10 +177,6 @@ show "Настройка сокращений bash команд"
   } > /home/${username}/.bash_aliases && \
   chown ${username}:${username} /home/${username}/.bash_aliases
 
-show "Очистка пакетного менеджера"
-  apt autoremove -y && \
-  apt autoclean -y
-
 # Добавление ключа для авторизации
 echo -en "\n${green}Добавить публичный ключ для авторизации по ssh? [Y/n]: ${end}"
   answer
@@ -194,21 +190,25 @@ echo -en "\n${green}Добавить публичный ключ для авто
   fi
 
 
-echo -en "\n${green}Установить python3 и всего зависимости? [Y/n]: ${end}"
-  answer
-  if [[ $? -eq 0 ]]; then
-  show "Установка python + dev + venv"
-  apt-get -y update
-  apt-get -y install python3 python3-venv python3-dev python3-pip
-  fi
+#echo -en "\n${green}Установить python3 и всего зависимости? [Y/n]: ${end}"
+#  answer
+#  if [[ $? -eq 0 ]]; then
+#  show "Установка python + dev + venv"
+#  apt-get -y update
+#  apt-get -y install python3 python3-venv python3-dev python3-pip
+#  fi
+#
+#echo -en "\n${green}Установить mysql server, supervisor и nginx ? [Y/n]: ${end}"
+#  answer
+#  if [[ $? -eq 0 ]]; then
+#  show "Установка mysql server, supervisor, nginx"
+#  apt-get -y update
+#  apt-get -y install mysql-server supervisor nginx
+#  fi
 
-echo -en "\n${green}Установить mysql server, supervisor и nginx ? [Y/n]: ${end}"
-  answer
-  if [[ $? -eq 0 ]]; then
-  show "Установка mysql server, supervisor, nginx"
-  apt-get -y update
-  apt-get -y install mysql-server supervisor nginx
-  fi
+show "Очистка пакетного менеджера"
+  apt autoremove -y && \
+  apt autoclean -y
 
 # === Вывод данных === #
 ip=$(wget -qO- ifconfig.co)
