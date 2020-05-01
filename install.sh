@@ -87,12 +87,12 @@ apt install -y tzdata  && \
 dpkg-reconfigure --frontend noninteractive tzdata  && \
 apt install -y ntp
 
-show "Настройка языка и региональных стандартов"
-apt install -y language-pack-ru
-locale-gen ru_RU && \
-locale-gen ru_RU.UTF-8 && \
-update-locale LANG=ru_RU.UTF-8 && \
-dpkg-reconfigure --frontend noninteractive locales
+#show "Настройка языка и региональных стандартов"
+#apt install -y language-pack-ru
+#locale-gen ru_RU && \
+#locale-gen ru_RU.UTF-8 && \
+#update-locale LANG=ru_RU.UTF-8 && \
+#dpkg-reconfigure --frontend noninteractive locales
 
 
 # === НАСТРОЙКА FIREWALL === #
