@@ -162,6 +162,10 @@ show "Установка утилиты git"
 show "Установка утилиты net-tools"
   	apt install -y net-tools
 
+run "Установка утилиты apache2-utils"
+  apt install -y apache2-utils
+check
+
 show "Создание пользователя ${username}"
 	groupadd ${username} && \
 	useradd -g ${username} -G sudo -s /bin/bash -m ${username} -p $(openssl passwd -1 ${password})
