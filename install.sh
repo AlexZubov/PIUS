@@ -162,9 +162,9 @@ show "Установка утилиты git"
 show "Установка утилиты net-tools"
   	apt install -y net-tools
 
-run "Установка утилиты apache2-utils"
-  apt install -y apache2-utils
-check
+#run "Установка утилиты apache2-utils"
+#  apt install -y apache2-utils
+#check
 
 show "Создание пользователя ${username}"
 	groupadd ${username} && \
