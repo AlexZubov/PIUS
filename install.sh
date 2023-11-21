@@ -203,12 +203,28 @@ echo -en "\n${green}Установить python3 и всего зависимо�
   fi
 
 
-echo -en "\n${green}Установить mysql server, supervisor и nginx ? [Y/n]: ${end}"
+echo -en "\n${green}Установить mysql server? [Y/n]: ${end}"
   answer
   if [[ $? -eq 0 ]]; then
-  show "Установка mysql server, supervisor, nginx"
+  show "Установка mysql server"
   apt-get -y update
-  apt-get -y install mysql-server supervisor nginx
+  apt-get -y install mysql-server
+  fi
+
+echo -en "\n${green}Установить supervisor? [Y/n]: ${end}"
+  answer
+  if [[ $? -eq 0 ]]; then
+  show "Установка supervisor"
+  apt-get -y update
+  apt-get -y install supervisor
+  fi
+
+echo -en "\n${green}Установить nginx? [Y/n]: ${end}"
+  answer
+  if [[ $? -eq 0 ]]; then
+  show "Установка nginx"
+  apt-get -y update
+  apt-get -y install nginx
   fi
 
 show "Очистка пакетного менеджера"
